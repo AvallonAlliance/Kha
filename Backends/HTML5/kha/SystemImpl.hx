@@ -282,6 +282,10 @@ class SystemImpl {
 		#if webgl
 		try {
 			SystemImpl.gl = canvas.getContext("webgl", {alpha: false, depth: false, stencil: false, antialias: false, premultipliedAlpha: true, preserveDrawingBuffer: false} );
+			if (SystemImpl.gl == null)
+			{
+				SystemImpl.gl = canvas.getContext("experimental-webgl", {alpha: false, depth: false, stencil: false, antialias: false, premultipliedAlpha: true, preserveDrawingBuffer: false} );
+			}
 			if (SystemImpl.gl != null) {
 				SystemImpl.gl.pixelStorei(GL.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
 				SystemImpl.gl.getExtension("OES_texture_float");
