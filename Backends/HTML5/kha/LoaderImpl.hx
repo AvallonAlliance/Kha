@@ -106,7 +106,7 @@ class LoaderImpl {
 	}
 
 	public static function loadVideoFromDescription(desc: Dynamic, done: kha.Video -> Void): Void {
-		var video = new kha.js.Video(desc.files, done);
+		kha.js.Video.fromFile(desc.files, done);
 	}
     
 	public static function loadBlobFromDescription(desc: Dynamic, done: Blob -> Void) {
@@ -133,8 +133,7 @@ class LoaderImpl {
 				var arrayBuffer = request.response;
 				if (arrayBuffer != null) {
 					var byteArray: Dynamic = untyped __js__("new Uint8Array(arrayBuffer)");
-					bytes = Bytes.alloc(byteArray.byteLength);
-					for (i in 0...byteArray.byteLength) bytes.set(i, byteArray[i]);
+					bytes = Bytes.ofData(byteArray);
 				}
 				else if (request.responseBody != null) {
 					var data: Dynamic = untyped __js__("VBArray(request.responseBody).toArray()");

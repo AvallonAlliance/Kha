@@ -69,6 +69,12 @@ class Image implements Canvas implements Resource {
 					#end
 					runDepthAndStencilSetupChain();
 				}
+				case Depth16: {
+					#if debug
+					trace('DepthAndStencilFormat "Depth16" not (yet?) supported on android, using target defaults');
+					#end
+					runDepthAndStencilSetupChain();
+				}
 			}
 
 			GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
@@ -375,6 +381,10 @@ class Image implements Canvas implements Resource {
 		bytes = null;
 	}
 
+	public function getPixels(): Bytes {
+		return null;
+	}
+
 	public function generateMipmaps(levels: Int): Void {
 		
 	}
@@ -384,6 +394,10 @@ class Image implements Canvas implements Resource {
 	}
 
 	public function setDepthStencilFrom(image: Image): Void {
+		
+	}
+
+	public function clear(x: Int, y: Int, z: Int, width: Int, height: Int, depth: Int, color: Color): Void {
 		
 	}
 

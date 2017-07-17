@@ -58,6 +58,14 @@ class Graphics implements kha.graphics4.Graphics {
 		}
 	}
 
+	public function beginFace(face: Int): Void {
+
+	}
+
+	public function beginEye(eye: Int): Void {
+		
+	}
+
 	public function end(): Void {
 		/*if (GLES20.glGetError() != GLES20.GL_NO_ERROR) {
 			trace('GL Error.');
@@ -181,8 +189,12 @@ class Graphics implements kha.graphics4.Graphics {
 		this.indexBuffer = indexBuffer;
 	}
 
-	public function createCubeMap(size: Int, format: TextureFormat, usage: Usage, canRead: Bool = false): CubeMap {
-		return null;
+	public function setCubeMap(stage: kha.graphics4.TextureUnit, cubeMap: kha.graphics4.CubeMap): Void {
+		
+	}
+	
+	public function setCubeMapDepth(stage: kha.graphics4.TextureUnit, cubeMap: kha.graphics4.CubeMap): Void {
+		
 	}
 
 	public function setTexture(stage: kha.graphics4.TextureUnit, texture: kha.Image): Void {
@@ -200,6 +212,10 @@ class Graphics implements kha.graphics4.Graphics {
 	}
 
 	public function setVideoTexture(unit: kha.graphics4.TextureUnit, texture: kha.Video): Void {
+
+	}
+
+	public function setImageTexture(unit: kha.graphics4.TextureUnit, texture: kha.Image): Void {
 
 	}
 
@@ -251,6 +267,10 @@ class Graphics implements kha.graphics4.Graphics {
 			case LinearFilter, AnisotropicFilter:
 				GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
 		}
+	}
+
+	public function setTexture3DParameters(texunit: kha.graphics4.TextureUnit, uAddressing: TextureAddressing, vAddressing: TextureAddressing, wAddressing: TextureAddressing, minificationFilter: TextureFilter, magnificationFilter: TextureFilter, mipmapFilter: MipMapFilter): Void {
+	
 	}
 
 	public function setCullMode(mode: CullMode): Void {
@@ -305,13 +325,6 @@ class Graphics implements kha.graphics4.Graphics {
 			valuesCache[i] = values[i];
 		}
 		GLES20.glUniform1fv(cast(location, ConstantLocation).value, values.length, valuesCache, 0);
-	}
-
-	public function setFloat4s(location: kha.graphics4.ConstantLocation, values: Vector<FastFloat>): Void {
-		for (i in 0...values.length) {
-			valuesCache[i] = values[i];
-		}
-		GLES20.glUniform4fv(cast(location, ConstantLocation).value, values.length, valuesCache, 0);
 	}
 
 	public function setVector2(location: kha.graphics4.ConstantLocation, value: FastVector2): Void {

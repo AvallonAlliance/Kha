@@ -156,6 +156,10 @@ class Image implements Resource {
 		
 	}
 
+	public function getPixels(): Bytes {
+		return null;
+	}
+
 	public function generateMipmaps(levels: Int): Void {
 		
 	}
@@ -165,6 +169,10 @@ class Image implements Resource {
 	}
 
 	public function setDepthStencilFrom(image: Image): Void {
+		
+	}
+
+	public function clear(x: Int, y: Int, z: Int, width: Int, height: Int, depth: Int, color: Color): Void {
 		
 	}
 	

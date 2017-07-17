@@ -66,6 +66,7 @@ class Image implements Canvas implements Resource {
 			case DepthAutoStencilAuto: 24;
 			case Depth24Stencil8: 24;
 			case Depth32Stencil8: 32;
+			case Depth16: 16;
 		}
 	}
 
@@ -76,6 +77,7 @@ class Image implements Canvas implements Resource {
 			case DepthAutoStencilAuto: 8;
 			case Depth24Stencil8: 8;
 			case Depth32Stencil8: 8;
+			case Depth16: 0;
 		}
 	}
 
@@ -221,6 +223,10 @@ class Image implements Canvas implements Resource {
 		bytes = null;
 	}
 
+	public function getPixels(): Bytes {
+		return null;
+	}
+
 	public function generateMipmaps(levels: Int): Void {
 		//untyped __cpp__("texture->generateMipmaps(levels)");
 	}
@@ -234,6 +240,10 @@ class Image implements Canvas implements Resource {
 	}
 
 	public function setDepthStencilFrom(image: Image): Void {
+		
+	}
+
+	public function clear(x: Int, y: Int, z: Int, width: Int, height: Int, depth: Int, color: Color): Void {
 		
 	}
 	

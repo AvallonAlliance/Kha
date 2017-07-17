@@ -29,6 +29,14 @@ class Graphics4 implements kha.graphics4.Graphics {
 		g1.begin();
 	}
 
+	public function beginFace(face: Int): Void {
+
+	}
+
+	public function beginEye(eye: Int): Void {
+		
+	}
+
 	public function end(): Void {
 		g1.end();
 	}
@@ -85,8 +93,16 @@ class Graphics4 implements kha.graphics4.Graphics {
 		
 	}
 
-	public function createCubeMap(size: Int, format: TextureFormat, usage: Usage, canRead: Bool = false): CubeMap {
-		return null;
+	public function setTexture3DParameters(texunit: TextureUnit, uAddressing: TextureAddressing, vAddressing: TextureAddressing, wAddressing: TextureAddressing, minificationFilter: TextureFilter, magnificationFilter: TextureFilter, mipmapFilter: MipMapFilter): Void {
+		
+	}
+
+	public function setCubeMap(stage: kha.graphics4.TextureUnit, cubeMap: kha.graphics4.CubeMap): Void {
+		
+	}
+	
+	public function setCubeMapDepth(stage: kha.graphics4.TextureUnit, cubeMap: kha.graphics4.CubeMap): Void {
+		
 	}
 	
 	public function renderTargetsInvertedY(): Bool {

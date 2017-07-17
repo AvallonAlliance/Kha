@@ -40,6 +40,14 @@ class EmptyGraphics4 implements Graphics {
 		
 	}
 
+	public function beginFace(face: Int): Void {
+
+	}
+
+	public function beginEye(eye: Int): Void {
+		
+	}
+
 	public function end(): Void {
 		
 	}
@@ -112,12 +120,24 @@ class EmptyGraphics4 implements Graphics {
 
 	}
 
+	public function setImageTexture(unit: kha.graphics4.TextureUnit, texture: kha.Image): Void {
+
+	}
+
 	public function setTextureParameters(texunit: TextureUnit, uAddressing: TextureAddressing, vAddressing: TextureAddressing, minificationFilter: TextureFilter, magnificationFilter: TextureFilter, mipmapFilter: MipMapFilter): Void {
 		
 	}
 
-	public function createCubeMap(size: Int, format: TextureFormat, usage: Usage, canRead: Bool = false): CubeMap {
-		return null;
+	public function setTexture3DParameters(texunit: TextureUnit, uAddressing: TextureAddressing, vAddressing: TextureAddressing, wAddressing: TextureAddressing, minificationFilter: TextureFilter, magnificationFilter: TextureFilter, mipmapFilter: MipMapFilter): Void {
+	
+	}
+
+	public function setCubeMap(stage: kha.graphics4.TextureUnit, cubeMap: kha.graphics4.CubeMap): Void {
+		
+	}
+	
+	public function setCubeMapDepth(stage: kha.graphics4.TextureUnit, cubeMap: kha.graphics4.CubeMap): Void {
+		
 	}
 	
 	public function renderTargetsInvertedY(): Bool {
@@ -153,10 +173,6 @@ class EmptyGraphics4 implements Graphics {
 	}
 
 	public function setFloats(location: ConstantLocation, floats: Vector<FastFloat>): Void {
-		
-	}
-
-	public function setFloat4s(location: ConstantLocation, floats: Vector<FastFloat>): Void {
 		
 	}
 

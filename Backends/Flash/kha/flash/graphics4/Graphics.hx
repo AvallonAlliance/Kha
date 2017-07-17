@@ -133,8 +133,12 @@ class Graphics implements kha.graphics4.Graphics {
 		context.setDepthTest(write, getCompareMode(mode));
 	}
 
-	public function createCubeMap(size: Int, format: TextureFormat, usage: Usage, canRead: Bool = false): CubeMap {
-		return null;
+	public function setCubeMap(stage: kha.graphics4.TextureUnit, cubeMap: kha.graphics4.CubeMap): Void {
+		
+	}
+	
+	public function setCubeMapDepth(stage: kha.graphics4.TextureUnit, cubeMap: kha.graphics4.CubeMap): Void {
+
 	}
 
 	private function getStencilAction(action: StencilAction): Context3DStencilAction {
@@ -205,6 +209,10 @@ class Graphics implements kha.graphics4.Graphics {
 		context.setSamplerStateAt(cast(texunit, TextureUnit).unit, getWrapMode(vAddressing), getFilter(magnificationFilter), getMipFilter(mipmapFilter));
 	}
 
+	public function setTexture3DParameters(texunit: kha.graphics4.TextureUnit, uAddressing: TextureAddressing, vAddressing: TextureAddressing, wAddressing: TextureAddressing, minificationFilter: TextureFilter, magnificationFilter: TextureFilter, mipmapFilter: MipMapFilter): Void {
+	
+	}
+
 	private function getBlendFactor(op: BlendingFactor): Context3DBlendFactor {
 		switch (op) {
 			case BlendZero, Undefined:
@@ -219,6 +227,14 @@ class Graphics implements kha.graphics4.Graphics {
 				return Context3DBlendFactor.ONE_MINUS_SOURCE_ALPHA;
 			case InverseDestinationAlpha:
 				return Context3DBlendFactor.ONE_MINUS_DESTINATION_ALPHA;
+			case SourceColor:
+				return Context3DBlendFactor.SOURCE_COLOR;
+			case InverseSourceColor:
+				return Context3DBlendFactor.ONE_MINUS_SOURCE_COLOR;
+			case DestinationColor:
+				return Context3DBlendFactor.DESTINATION_COLOR;
+			case InverseDestinationColor:
+				return Context3DBlendFactor.ONE_MINUS_DESTINATION_COLOR;
 			default:
 				return Context3DBlendFactor.ZERO;
 		}
@@ -287,6 +303,10 @@ class Graphics implements kha.graphics4.Graphics {
 	}
 
 	public function setVideoTexture(unit: kha.graphics4.TextureUnit, texture: kha.Video): Void {
+
+	}
+
+	public function setImageTexture(unit: kha.graphics4.TextureUnit, texture: kha.Image): Void {
 
 	}
 
@@ -398,10 +418,6 @@ class Graphics implements kha.graphics4.Graphics {
 		context.setProgramConstantsFromVector(flashLocation.type, flashLocation.value, values.toData());
 	}
 
-	public function setFloat4s(location: kha.graphics4.ConstantLocation, values: haxe.ds.Vector<FastFloat>): Void {
-		setFloats(location, values);
-	}
-
 	//public function renderToBackbuffer(): Void {
 	//	context.setRenderToBackBuffer();
 	//}
@@ -419,6 +435,14 @@ class Graphics implements kha.graphics4.Graphics {
 		else context.setRenderToTexture(target.getFlashTexture(), enableDepthStencil(target.depthStencilFormat()));
 	}
 
+	public function beginFace(face: Int): Void {
+
+	}
+
+	public function beginEye(eye: Int): Void {
+		
+	}
+
 	function enableDepthStencil( format : DepthStencilFormat ) : Bool {
 		return switch (format) {
 			case NoDepthAndStencil: false;
@@ -433,6 +457,12 @@ class Graphics implements kha.graphics4.Graphics {
 			case Depth32Stencil8: {
 				#if debug
 				trace('DepthStencilFormat "Depth32Stencil8" is not supported, using target defaults');
+				#end
+				true;
+			}
+			case Depth16: {
+				#if debug
+				trace('DepthStencilFormat "Depth16" is not supported, using target defaults');
 				#end
 				true;
 			}
