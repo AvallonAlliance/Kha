@@ -373,9 +373,15 @@ class SystemImpl {
 
 				// Lookup the size the browser is displaying the canvas.
 				//TODO deal with window.devicePixelRatio ?
-				var displayWidth  = canvas.clientWidth;
-				var displayHeight = canvas.clientHeight;
-
+				var devicePixelRatio:Float = 1;
+				if (window.devicePixelRatio != null && window.devicePixelRatio != 1)
+				{
+					devicePixelRatio = window.devicePixelRatio;
+				}
+				
+				var displayWidth  = canvas.clientWidth * devicePixelRatio;
+				var displayHeight = canvas.clientHeight * devicePixelRatio;
+				
 				// Check if the canvas is not the same size.
 				if (canvas.width  != displayWidth ||
 					canvas.height != displayHeight) {
@@ -384,7 +390,8 @@ class SystemImpl {
 					canvas.width  = displayWidth;
 					canvas.height = displayHeight;
 				}
-
+				
+				
 				System.render(0, frame);
 				if (SystemImpl.gl != null) {
 					// Clear alpha for IE11
