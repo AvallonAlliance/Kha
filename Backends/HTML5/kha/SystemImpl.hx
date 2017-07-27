@@ -46,6 +46,7 @@ class SystemImpl {
 	public static var mobileAudioPlaying: Bool = false;
 	private static var chrome: Bool = false;
 	public static var insideInputEvent: Bool = false;
+	static var devicePixelRatio:Int = 1;
 
 	private static function errorHandler(message: String, source: String, lineno: Int, colno: Int, error: Dynamic) {
 		Browser.console.error(error.stack);
@@ -110,11 +111,11 @@ class SystemImpl {
 	}
 
 	public static function windowWidth(windowId: Int = 0): Int {
-		return (khanvas.width == 0 && options.width != null) ? options.width : khanvas.width;
+		return devicePixelRatio * ((khanvas.width == 0 && options.width != null) ? options.width : khanvas.width);
 	}
 
 	public static function windowHeight(windowId: Int = 0): Int {
-		return (khanvas.height == 0 && options.height != null) ? options.height : khanvas.height;
+		return devicePixelRatio * ((khanvas.height == 0 && options.height != null) ? options.height : khanvas.height);
 	}
 
 	public static function screenDpi(): Int {
@@ -372,8 +373,7 @@ class SystemImpl {
 			if (untyped canvas.getContext) {
 
 				// Lookup the size the browser is displaying the canvas.
-				//TODO deal with window.devicePixelRatio ?
-				var devicePixelRatio:Float = 1;
+				//TODO deal with window.devicePixelRatio ?				
 				if (window.devicePixelRatio != null && window.devicePixelRatio != 1)
 				{
 					devicePixelRatio = window.devicePixelRatio;
