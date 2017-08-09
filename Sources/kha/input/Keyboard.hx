@@ -38,10 +38,9 @@ class Keyboard extends Controller {
 				textInput.style.color = "transparent";
 				textInput.value = "";
 				
-				untyped textInput.autocapitalize = "off";
+				/*untyped textInput.autocapitalize = "off";
 				untyped textInput.autocorrect = "off";
-				textInput.autocomplete = "off";
-				
+				textInput.autocomplete = "off";*/
 				// TODO: Position for mobile browsers better
 				
 				textInput.style.left = "0px";
