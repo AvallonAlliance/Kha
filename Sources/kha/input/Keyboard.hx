@@ -24,10 +24,7 @@ class Keyboard extends Controller {
 	public function show(): Void {
 		try
 		{
-			untyped $(document.body).append('<input type="text" id="keyboard_w"/>');
-			untyped $("#keyboard_w").prompt();
-			
-			
+			untyped $(document.body).append('<input type="text" id="keyboard_w"/>');			
 			untyped $(document).on("click",function() { $("#keyboard_w").focus(); });
 		}
 		catch (E:Dynamic)
