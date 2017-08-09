@@ -111,7 +111,7 @@ class Keyboard extends Controller {
 		
 		if (enableTextEvents) {
 			
-			Timer.delay (function () { textInput.focus (); }, 20);
+			Timer.delay (function () { textInput.focus (); trace("focus input"); }, 20);
 			
 		}
 		
