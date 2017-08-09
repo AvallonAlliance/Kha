@@ -69,10 +69,9 @@ class Keyboard extends Controller {
 			
 			if (!enableTextEvents) {
 				
-				textInput.addEventListener ('onkeydown', SystemImpl.keyDown, true);
-				textInput.addEventListener ('onkeyup', SystemImpl.keyUp, true);
-				textInput.addEventListener ('onkeypress', SystemImpl.keyPress, true);
+				textInput.addEventListener ('input', SystemImpl.keyPress, true);
 				textInput.addEventListener ('blur', handleFocusEvent, true);
+				
 			}
 			
 			textInput.focus ();
@@ -83,9 +82,7 @@ class Keyboard extends Controller {
 	public function hide(): Void {
 		if (textInput != null) {
 			
-			textInput.removeEventListener ('onkeydown', SystemImpl.keyDown, true);
-			textInput.removeEventListener ('onkeyup', SystemImpl.keyUp, true);
-			textInput.removeEventListener ('onkeypress', SystemImpl.keyPress, true);
+			textInput.removeEventListener ('input', handleInputEvent, true);
 			textInput.removeEventListener ('blur', handleFocusEvent, true);
 			
 			textInput.blur ();
