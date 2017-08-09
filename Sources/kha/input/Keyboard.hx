@@ -22,11 +22,27 @@ class Keyboard extends Controller {
 	}
 	
 	public function show(): Void {
-
+		try
+		{
+			untyped $(document.body).append('<input type="text" id="keyboard_w"/>');
+			untyped $("#keyboard_w").prompt();
+			untyped $("#keyboard_w").focus();
+		}
+		catch (E:Dynamic)
+		{
+			trace("no jauery");
+		}
 	}
 
 	public function hide(): Void {
-
+		try
+		{
+			untyped $("#keyboard_w").remove();
+		}
+		catch (E:Dynamic)
+		{
+			trace("no jauery");
+		}
 	}
 
 	private static var instance: Keyboard;
