@@ -94,7 +94,7 @@ class Keyboard extends Controller {
 	
 	private function handleInputEvent (event:InputEvent):Void {
 		
-		if (!event.isChar()) return;
+		if (!event.isChar) return;
 		for (listener in pressListeners) {
 			listener(String.fromCharCode(event.which));
 		}
