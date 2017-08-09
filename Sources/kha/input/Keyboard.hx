@@ -1,10 +1,17 @@
 package kha.input;
 
+import haxe.Timer;
+import js.Browser;
+import js.html.FocusEvent;
+import js.html.InputEvent;
+import js.html.MouseEvent;
 import kha.network.Controller;
 
 @:allow(kha.SystemImpl)
 @:expose
 class Keyboard extends Controller {
+	private static var textInput:Dynamic;
+	private static var enableTextEvents:Bool = false;
 	public static function get(num: Int = 0): Keyboard {
 		return SystemImpl.getKeyboard(num);
 	}
@@ -22,27 +29,90 @@ class Keyboard extends Controller {
 	}
 	
 	public function show(): Void {
-		try
-		{
-			untyped $(document.body).append('<input type="text" id="keyboard_w"/>');			
-			untyped $(document).on("click",function() { $("#keyboard_w").focus(); });
-		}
-		catch (E:Dynamic)
-		{
-			trace("no jauery");
-		}
+		if (textInput == null) {
+				
+				textInput = cast Browser.document.createElement ('input');
+				textInput.type = 'text';
+				textInput.style.position = 'absolute';
+				textInput.style.opacity = "0";
+				textInput.style.color = "transparent";
+				textInput.value = "";
+				
+				untyped textInput.autocapitalize = "off";
+				untyped textInput.autocorrect = "off";
+				textInput.autocomplete = "off";
+				
+				// TODO: Position for mobile browsers better
+				
+				textInput.style.left = "0px";
+				textInput.style.top = "50%";
+				
+				if (~/(iPad|iPhone|iPod).*OS 8_/gi.match (Browser.window.navigator.userAgent)) {
+					
+					textInput.style.fontSize = "0px";
+					textInput.style.width = '0px';
+					textInput.style.height = '0px';
+					
+				} else {
+					
+					textInput.style.width = '1px';
+					textInput.style.height = '1px';
+					
+				}
+				
+				untyped (textInput.style).pointerEvents = 'none';
+				textInput.style.zIndex = "-10000000";
+				
+				Browser.document.body.appendChild (textInput);
+				
+			}
+			
+			if (!enableTextEvents) {
+				
+				textInput.addEventListener ('input', handleInputEvent, true);
+				textInput.addEventListener ('blur', handleFocusEvent, true);
+				
+			}
+			
+			textInput.focus ();
+			
+			enableTextEvents = true;
 	}
 
 	public function hide(): Void {
-		try
-		{
-			untyped $("#keyboard_w").remove();
-			untyped $(document).off("click");
+		if (textInput != null) {
+			
+			textInput.removeEventListener ('input', handleInputEvent, true);
+			textInput.removeEventListener ('blur', handleFocusEvent, true);
+			
+			textInput.blur ();
+			
 		}
-		catch (E:Dynamic)
-		{
-			trace("no jauery");
+		
+		enableTextEvents = false;
+	}
+	
+	private function handleInputEvent (event:InputEvent):Void {
+		
+		
+		
+	}
+	
+	
+	private function handleMouseEvent (event:MouseEvent):Void {
+		
+		
+		
+	}
+	
+	private function handleFocusEvent (event:FocusEvent):Void {
+		
+		if (enableTextEvents) {
+			
+			Timer.delay (function () { textInput.focus (); }, 20);
+			
 		}
+		
 	}
 
 	private static var instance: Keyboard;
