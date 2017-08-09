@@ -94,6 +94,17 @@ class Keyboard extends Controller {
 	
 	private function handleInputEvent (event:InputEvent):Void {
 		
+		if (event.which != 0)
+		{
+			for (listener in downListeners) {
+				listener(cast event.which);
+			}
+			
+			for (listener in upListeners) {
+				listener(cast event.which);
+			}
+		}
+		
 		for (listener in pressListeners) {
 			untyped listener(event.data);
 		}
