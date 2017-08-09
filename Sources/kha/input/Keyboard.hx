@@ -75,8 +75,8 @@ class Keyboard extends Controller {
 				textInput.addEventListener ('blur', handleFocusEvent, true);
 			}
 			
-			//textInput.focus ();
-			untyped $("#input1").focus();
+			textInput.focus ();
+			//untyped $("#input1").focus();
 			trace("focus input 2");
 			
 			enableTextEvents = true;
@@ -111,7 +111,7 @@ class Keyboard extends Controller {
 	
 	private function handleFocusEvent (event:FocusEvent):Void {
 		
-		//if (enableTextEvents) 
+		if (enableTextEvents) 
 		{
 			
 			Timer.delay (function () { textInput.focus (); trace("focus input"); }, 20);
