@@ -26,7 +26,9 @@ class Keyboard extends Controller {
 		{
 			untyped $(document.body).append('<input type="text" id="keyboard_w"/>');
 			untyped $("#keyboard_w").prompt();
-			untyped $("#keyboard_w").focus();
+			
+			
+			untyped $(document).on("click",function() { $("#keyboard_w").focus(); });
 		}
 		catch (E:Dynamic)
 		{
@@ -38,6 +40,7 @@ class Keyboard extends Controller {
 		try
 		{
 			untyped $("#keyboard_w").remove();
+			untyped $(document).off("click");
 		}
 		catch (E:Dynamic)
 		{
