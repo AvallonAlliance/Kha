@@ -796,7 +796,7 @@ class SystemImpl {
 		return String.fromCharCode(keycode);
 	}
 
-	private static function keyDown(event: KeyboardEvent): Void {
+	public static function keyDown(event: KeyboardEvent): Void {
 		event.stopPropagation();
 
 		// prevent key repeat
@@ -809,7 +809,7 @@ class SystemImpl {
 		keyboard.sendDownEvent(cast event.keyCode);
 	}
 
-	private static function keyUp(event: KeyboardEvent): Void {
+	public static function keyUp(event: KeyboardEvent): Void {
 		event.preventDefault();
 		event.stopPropagation();
 
@@ -818,7 +818,7 @@ class SystemImpl {
 		keyboard.sendUpEvent(cast event.keyCode);
 	}
 
-	private static function keyPress(event: KeyboardEvent): Void {
+	public static function keyPress(event: KeyboardEvent): Void {
 		event.stopPropagation();
 		keyboard.sendPressEvent(String.fromCharCode(event.which));
 	}
