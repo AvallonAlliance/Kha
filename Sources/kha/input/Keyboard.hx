@@ -75,7 +75,8 @@ class Keyboard extends Controller {
 				textInput.addEventListener ('blur', handleFocusEvent, true);
 			}
 			
-			textInput.focus ();
+			//textInput.focus ();
+			untyped $("#input1").focus();
 			trace("focus input 2");
 			
 			enableTextEvents = true;
