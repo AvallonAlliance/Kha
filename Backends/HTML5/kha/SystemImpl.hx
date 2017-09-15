@@ -263,8 +263,8 @@ class SystemImpl {
 
 		#if kha_webgl
 		try {
-			SystemImpl.gl = canvas.getContext("webgl2", { alpha: false, antialias: options.samplesPerPixel > 1, stencil: true, preserveDrawingBuffer: true } );
-			SystemImpl.gl.pixelStorei(GL.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
+			SystemImpl.gl = canvas.getContext("webgl2", { alpha: false, premultipliedAlpha: false, antialias: options.samplesPerPixel > 1, stencil: true, preserveDrawingBuffer: true } );
+			SystemImpl.gl.pixelStorei(GL.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 0);
 
 			halfFloat = {HALF_FLOAT_OES: 0x140B}; // GL_HALF_FLOAT
 			depthTexture = {UNSIGNED_INT_24_8_WEBGL: 0x84FA}; // GL_UNSIGNED_INT_24_8
@@ -286,9 +286,9 @@ class SystemImpl {
 
 		if (!gl2) {
 			try {
-				SystemImpl.gl = canvas.getContext("experimental-webgl", { alpha: false, antialias: options.samplesPerPixel > 1, stencil: true, preserveDrawingBuffer: true } );
+				SystemImpl.gl = canvas.getContext("experimental-webgl", { alpha: false, premultipliedAlpha: false, antialias: options.samplesPerPixel > 1, stencil: true, preserveDrawingBuffer: true } );
 				if (SystemImpl.gl != null) {
-					SystemImpl.gl.pixelStorei(GL.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
+					SystemImpl.gl.pixelStorei(GL.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 0);
 					SystemImpl.gl.getExtension("OES_texture_float");
 					SystemImpl.gl.getExtension("OES_texture_float_linear");
 					halfFloat = SystemImpl.gl.getExtension("OES_texture_half_float");
