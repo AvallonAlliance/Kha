@@ -60,22 +60,7 @@ class PipelineState extends PipelineStateBase {
 		var highpSupported = highp.precision != 0;
 		var files: Array<String> = shader.files;
 		for (i in 0...files.length) {
-			if (SystemImpl.gl2) {
-				if (files[i].indexOf("-webgl2") >= 0 || files[i].indexOf("runtime-string") >= 0) {
-					SystemImpl.gl.shaderSource(s, shader.sources[i]);
-					break;
-				}
-			}
-			else {
-				if (!highpSupported && files[i].indexOf("-relaxed") >= 0) {
-					SystemImpl.gl.shaderSource(s, shader.sources[i]);
-					break;
-				}
-				if (highpSupported && files[i].indexOf("-relaxed") < 0) {
-					SystemImpl.gl.shaderSource(s, shader.sources[i]);
-					break;
-				}
-			}
+			SystemImpl.gl.shaderSource(s, shader.sources[i]);			
 		}
 		SystemImpl.gl.compileShader(s);
 		if (!SystemImpl.gl.getShaderParameter(s, GL.COMPILE_STATUS)) {
