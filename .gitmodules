@@ -4,8 +4,8 @@
 	branch = master
 [submodule "Tools/khamake"]
 	path = Tools/khamake
-	url = https://github.com/Kode/khamake.git
-	branch = master
+	url = git@github.com:AvallonAlliance/khamake.git
+	branch = develop
 [submodule "Backends/Kore/khacpp"]
 	path = Backends/Kore/khacpp
 	url = https://github.com/Kode/khacpp.git
