@@ -10,24 +10,24 @@ class PipelineState extends PipelineStateBase {
 	private var program: Dynamic;
 	private var textures: Array<String>;
 	private var textureValues: Array<Dynamic>;
-	
+
 	public function new() {
 		super();
 		program = SystemImpl.gl.createProgram();
 		textures = new Array<String>();
 		textureValues = new Array<Dynamic>();
 	}
-	
+
 	public function delete(): Void {
 		SystemImpl.gl.deleteProgram(program);
 	}
-		
+
 	public function compile(): Void {
 		compileShader(vertexShader);
 		compileShader(fragmentShader);
 		SystemImpl.gl.attachShader(program, vertexShader.shader);
 		SystemImpl.gl.attachShader(program, fragmentShader.shader);
-		
+
 		var index = 0;
 		for (structure in inputLayout) {
 			for (element in structure.elements) {
@@ -40,19 +40,19 @@ class PipelineState extends PipelineStateBase {
 				}
 			}
 		}
-		
+
 		SystemImpl.gl.linkProgram(program);
 		if (!SystemImpl.gl.getProgramParameter(program, GL.LINK_STATUS)) {
 			throw "Could not link the shader program:\n" + SystemImpl.gl.getProgramInfoLog(program);
 		}
 	}
-	
+
 	public function set(): Void {
 		SystemImpl.gl.useProgram(program);
 		for (index in 0...textureValues.length) SystemImpl.gl.uniform1i(textureValues[index], index);
 		SystemImpl.gl.colorMask(colorWriteMaskRed, colorWriteMaskGreen, colorWriteMaskBlue, colorWriteMaskAlpha);
 	}
-	
+
 	private function compileShader(shader: Dynamic): Void {
 		if (shader.shader != null) return;
 		var s = SystemImpl.gl.createShader(shader.type);
@@ -60,7 +60,22 @@ class PipelineState extends PipelineStateBase {
 		var highpSupported = highp.precision != 0;
 		var files: Array<String> = shader.files;
 		for (i in 0...files.length) {
-			SystemImpl.gl.shaderSource(s, shader.sources[i]);			
+			if (SystemImpl.gl2) {
+				if (files[i].indexOf("-webgl2") >= 0 || files[i].indexOf("runtime-string") >= 0) {
+					SystemImpl.gl.shaderSource(s, shader.sources[i]);
+					break;
+				}
+			}
+			else {
+				if (!highpSupported && files[i].indexOf("-relaxed") >= 0) {
+					SystemImpl.gl.shaderSource(s, shader.sources[i]);
+					break;
+				}
+				if (highpSupported && files[i].indexOf("-relaxed") < 0) {
+					SystemImpl.gl.shaderSource(s, shader.sources[i]);
+					break;
+				}
+			}
 		}
 		SystemImpl.gl.compileShader(s);
 		if (!SystemImpl.gl.getShaderParameter(s, GL.COMPILE_STATUS)) {
@@ -68,7 +83,7 @@ class PipelineState extends PipelineStateBase {
 		}
 		shader.shader = s;
 	}
-	
+
 	public function getConstantLocation(name: String): kha.graphics4.ConstantLocation {
 		var location = SystemImpl.gl.getUniformLocation(program, name);
 		var type = GL.FLOAT;
@@ -82,7 +97,7 @@ class PipelineState extends PipelineStateBase {
 		}
 		return new kha.js.graphics4.ConstantLocation(location, type);
 	}
-	
+
 	public function getTextureUnit(name: String): kha.graphics4.TextureUnit {
 		var index = findTexture(name);
 		if (index < 0) {
@@ -93,7 +108,7 @@ class PipelineState extends PipelineStateBase {
 		}
 		return new kha.js.graphics4.TextureUnit(index);
 	}
-	
+
 	private function findTexture(name: String): Int {
 		for (index in 0...textures.length) {
 			if (textures[index] == name) return index;
