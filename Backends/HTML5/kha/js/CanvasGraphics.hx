@@ -165,7 +165,7 @@ class CanvasGraphics extends Graphics {
 			var xpos = x;
 			var ypos = y;
 			for (i in 0...text.length) {
-				var q = webfont.kravur._get(fontSize).getBakedQuad(text.charCodeAt(i) - 32, xpos, ypos);
+				var q = webfont.kravur._get(fontSize).getBakedQuad(text.charCodeAt(i), xpos, ypos);
 				if (q != null) {
 					if (q.s1 - q.s0 > 0 && q.t1 - q.t0 > 0 && q.x1 - q.x0 > 0 && q.y1 - q.y0 > 0)
 						canvas.drawImage(image, q.s0 * image.width, q.t0 * image.height, (q.s1 - q.s0) * image.width, (q.t1 - q.t0) * image.height, q.x0, q.y0, q.x1 - q.x0, q.y1 - q.y0);

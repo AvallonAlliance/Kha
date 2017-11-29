@@ -748,14 +748,7 @@ class TextShaderPainter {
 		text = null;
 	}
 	
-	//TODO: Make this fast
-	private static function findIndex(charcode: Int, fontGlyphs: Array<Int>): Int {
-		for (i in 0...fontGlyphs.length) {
-			if (fontGlyphs[i] == charcode) return i;
-		}
-		return 0;
-	}
-	
+
 	public function drawString(text: String, opacity: FastFloat, color: Color, x: Float, y: Float, transformation: FastMatrix3, fontGlyphs: Array<Int>): Void {
 		var font = this.font._get(fontSize, fontGlyphs);
 		var tex = font.getTexture();
@@ -766,7 +759,7 @@ class TextShaderPainter {
 		var ypos = y;
 		startString(text);
 		for (i in 0...stringLength()) {
-			var q = font.getBakedQuad(findIndex(charCodeAt(i), fontGlyphs), xpos, ypos);
+			var q = font.getBakedQuad(charCodeAt(i), xpos, ypos);
 			if (q != null) {
 				if (bufferIndex + 1 >= bufferSize) drawBuffer();
 				setRectColors(opacity, color);

@@ -29,13 +29,13 @@ class AlignedQuad {
 class KravurImage {
 	private var mySize: Float;
 	
-	private var chars: Vector<Stbtt_bakedchar>;
+	private var chars: Map<Int,Stbtt_bakedchar>;
 	private var texture: Image;
 	public var width: Int;
 	public var height: Int;
 	private var baseline: Float;
 	
-	public function new(size: Int, ascent: Int, descent: Int, lineGap: Int, width: Int, height: Int, chars: Vector<Stbtt_bakedchar>, pixels: Blob) {
+	public function new(size: Int, ascent: Int, descent: Int, lineGap: Int, width: Int, height: Int, chars: Map<Int,Stbtt_bakedchar>, pixels: Blob) {
 		mySize = size;
 		this.width = width;
 		this.height = height;
@@ -57,17 +57,22 @@ class KravurImage {
 	public function getTexture(): Image {
 		return texture;
 	}
-	
-	public function getBakedQuad(char_index: Int, xpos: Float, ypos: Float): AlignedQuad {
-		if (char_index >= chars.length) return null;
+
+	public function getBakedQuad(charIndex: Int, xpos: Float, ypos: Float): AlignedQuad {
+		if (!chars.exists(charIndex)) return null;
+
 		var ipw: Float = 1.0 / width;
 		var iph: Float = 1.0 / height;
-		var b = chars[char_index];
+
+		var b = chars.get(charIndex);
+
 		if (b == null) return null;
+
 		var round_x: Int = Math.round(xpos + b.xoff);
 		var round_y: Int = Math.round(ypos + b.yoff);
 
 		var q = new AlignedQuad();
+
 		q.x0 = round_x;
 		q.y0 = round_y;
 		q.x1 = round_x + b.x1 - b.x0;
@@ -84,9 +89,9 @@ class KravurImage {
 	}
 	
 	private function getCharWidth(charIndex: Int): Float {
-		if (charIndex < 32) return 0;
-		if (charIndex - 32 >= chars.length) return 0;
-		return chars[charIndex - 32].xadvance;
+		if (!chars.exists(charIndex)) return null;
+
+		return chars.get(charIndex).xadvance;
 	}
 	
 	public function getHeight(): Float {
@@ -127,8 +132,15 @@ class Kravur implements Font {
 			var width: Int = 64;
 			var height: Int = 32;
 			var baked = new Vector<Stbtt_bakedchar>(glyphs.length);
+
+			var chars:Map<Int,Stbtt_bakedchar> = new Map();
+
 			for (i in 0...baked.length) {
-				baked[i] = new Stbtt_bakedchar();
+				var char = new Stbtt_bakedchar();
+
+				baked[i] = char;
+
+				chars.set(glyphs[i], char);
 			}
 
 			var pixels: Blob = null;
@@ -146,13 +158,14 @@ class Kravur implements Font {
 			var info = new Stbtt_fontinfo();
 			StbTruetype.stbtt_InitFont(info, blob, 0);
 
+
 			var metrics = StbTruetype.stbtt_GetFontVMetrics(info);
 			var scale = StbTruetype.stbtt_ScaleForPixelHeight(info, fontSize);
 			var ascent = Math.round(metrics.ascent * scale); // equals baseline
 			var descent = Math.round(metrics.descent * scale);
 			var lineGap = Math.round(metrics.lineGap * scale);
 			
-			var image = new KravurImage(Std.int(fontSize), ascent, descent, lineGap, width, height, baked, pixels);
+			var image = new KravurImage(Std.int(fontSize), ascent, descent, lineGap, width, height, chars, pixels);
 			images[fontSize] = image;
 			return image;
 		}
